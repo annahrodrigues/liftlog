@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LiftLog — diário de treino</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <style>#exerciseBank{width:100%;display:block;margin-top:6px;border:1px solid #dcded6;border-radius:8px;padding:11px 12px;font:13px Manrope;background:#fcfcfa;color:#20211e}.exercise-details{display:grid;grid-template-columns:110px 1fr;gap:10px;border-top:1px solid #f0f0ec;margin-top:12px;padding-top:12px}.exercise-details label{font-size:9px;font-weight:800;letter-spacing:.7px;color:#85877f}.exercise-details input{display:block;width:100%;margin-top:5px;border:1px solid #e1e2dc;border-radius:6px;padding:8px;font:12px Manrope;color:#30312e}.delete-history{border:0;background:#fff0eb;color:#ca4825;border-radius:6px;padding:7px 9px;font-size:10px;font-weight:800}</style>
+  <style>:root{--acid:#ff6b35;--acid-deep:#d94720}.hidden{display:none!important}.workout-actions{display:flex;gap:9px}.empty-workout{max-width:520px;margin:70px auto;text-align:center}.empty-icon{width:56px;height:56px;display:grid;place-items:center;border-radius:16px;background:#ffe0d2;color:#dd542c;font-size:28px;margin:auto}.empty-workout h2{margin:18px 0 7px;font-size:21px}.empty-workout p,.modal-help{color:#777970;font-size:12px;line-height:1.65;margin:0 0 18px}.remove-exercise{border:0;background:transparent;color:#a3a59d;font-size:22px;margin-left:10px}.modal{width:min(430px,calc(100vw - 32px));border:0;border-radius:15px;padding:0;box-shadow:0 20px 80px #0004}.modal::backdrop{background:#17181488}.modal form{padding:25px}.modal-heading{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:23px}.modal-heading h2{margin:0;font-size:20px}.close-modal{border:0;background:#f0f0eb;font-size:21px;line-height:28px;width:28px;border-radius:50%;color:#666}.modal label{display:block;font-size:11px;font-weight:800;color:#63655e;margin:13px 0}.modal input{width:100%;display:block;margin-top:6px;border:1px solid #dcded6;border-radius:8px;padding:11px 12px;font:13px Manrope;background:#fcfcfa}.modal input:focus{outline:2px solid #ff6b35;border-color:#ff6b35}.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full-button{width:100%;margin-top:12px}.profile-button{border:0;background:transparent;text-align:left;padding:0;display:flex;align-items:center;gap:10px;cursor:pointer}.live-pill{background:#ffe0d2;color:#9c3518}.live-pill i{background:#ef5427}.rest-wrap strong,.timer-dot,.new-set,.increase{color:#e54c23}.set-row.done .check-set{background:#ff6b35}.line{stroke:#f05b2d}.area{fill:#ff6b352b}.sidebar-footer{cursor:pointer}.save-name{margin-top:12px}</style>
+</head>
+<body>
+  <main class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#treino" aria-label="LiftLog, início"><span class="brand-mark">L</span><span>liftlog</span></a>
+      <nav>
+        <button class="nav-item active" data-page="treino"><span>⌁</span> Treino</button>
+        <button class="nav-item" data-page="rotinas"><span>▤</span> Rotinas</button>
+        <button class="nav-item" data-page="progresso"><span>↗</span> Progresso</button>
+        <button class="nav-item" data-page="historico"><span>◷</span> Histórico</button>
+      </nav>
+      <button class="sidebar-footer profile-button" id="editProfile"><span class="avatar" id="avatar">LM</span><div><strong id="profileName">Annah</strong><small>Editar perfil</small></div></button>
+    </aside>
+
+    <section class="content">
+      <div id="treino" class="page active-page">
+        <header class="topbar"><div><p class="eyebrow" id="workoutDate">SEU DIÁRIO DE TREINO</p><h1 id="workoutTitle">Pronto para treinar?</h1></div><div class="workout-actions"><button class="primary-button" id="startWorkout">Iniciar treino</button><button class="primary-button hidden" id="startTimer">Iniciar cronômetro</button><button class="ghost-button hidden" id="endWorkout">Encerrar treino</button></div></header>
+        <section class="empty-workout" id="emptyWorkout"><div class="empty-icon">↟</div><h2>Monte o treino de hoje</h2><p>Escolha um nome, adicione os exercícios e comece quando estiver pronto.</p><button class="primary-button" id="emptyStartWorkout">Iniciar treino</button></section>
+        <section class="session-strip hidden" id="sessionStrip">
+          <div><span class="timer-dot">◷</span><strong id="workoutClock">00:42:18</strong><small> em treino</small></div>
+          <div class="rest-wrap"><span>PAUSA ENTRE SÉRIES</span><strong id="restTimer">00:00</strong><button id="toggleRest">Iniciar pausa</button></div>
+          <div class="session-stat"><span>VOLUME</span><strong id="totalVolume">2.280 <em>kg</em></strong></div>
+          <div class="session-stat"><span>SÉRIES</span><strong id="setCount">8</strong></div>
+        </section>
+
+        <section class="exercise-list hidden" id="exerciseList"></section>
+        <button class="add-exercise hidden" id="addExercise">+ Adicionar exercício</button>
+      </div>
+
+      <div id="rotinas" class="page">
+        <header class="topbar"><div><p class="eyebrow">SUA BIBLIOTECA</p><h1>Rotinas</h1></div><button class="primary-button">+ Nova rotina</button></header>
+        <div class="routine-grid" id="routineGrid"></div>
+      </div>
+
+      <div id="progresso" class="page">
+        <header class="topbar"><div><p class="eyebrow">ANÁLISE DE FORÇA</p><h1>Progresso</h1></div><button class="select-button">Últimas 12 semanas⌄</button></header>
+        <section class="chart-card"><div class="chart-heading"><div><h2>Supino reto</h2><p>Volume por sessão</p></div><div class="increase">↑ 18,4% <small>vs. período anterior</small></div></div><div class="chart"><div class="y-labels"><span>4.0k</span><span>3.0k</span><span>2.0k</span><span>1.0k</span><span>0</span></div><svg viewBox="0 0 700 260" preserveAspectRatio="none" aria-label="Gráfico de progresso"><defs><linearGradient id="fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#d7ff4f" stop-opacity=".35"/><stop offset="100%" stop-color="#d7ff4f" stop-opacity="0"/></linearGradient></defs><path class="grid" d="M0 15H700M0 75H700M0 135H700M0 195H700M0 255H700"/><path class="area" d="M0 220 L65 190 L125 205 L190 158 L260 175 L330 140 L390 151 L455 104 L520 124 L585 74 L650 91 L700 38 L700 260 L0 260Z"/><path class="line" d="M0 220 L65 190 L125 205 L190 158 L260 175 L330 140 L390 151 L455 104 L520 124 L585 74 L650 91 L700 38"/></svg><div class="x-labels"><span>Mai</span><span>Jun</span><span>Jul</span><span>Ago</span></div></div></section>
+        <section class="metric-row"><article><span>MAIOR CARGA</span><strong>72,5 <em>kg</em></strong><small>Supino reto</small></article><article><span>VOLUME TOTAL</span><strong>38.240 <em>kg</em></strong><small>este mês</small></article><article><span>SEQUÊNCIA</span><strong>6 <em>sem.</em></strong><small>treinando consistentemente</small></article></section>
+      </div>
+
+      <div id="historico" class="page">
+        <header class="topbar"><div><p class="eyebrow">REGISTROS</p><h1>Histórico</h1></div></header>
+        <div class="history-card" id="historyList"></div>
+      </div>
+    </section>
+  </main>
+  <div class="toast" id="toast"></div>
+  <dialog class="modal" id="exerciseModal">
+    <form method="dialog" id="exerciseForm">
+      <div class="modal-heading"><div><p class="eyebrow">NOVO MOVIMENTO</p><h2>Adicionar exercício</h2></div><button class="close-modal" value="cancel" aria-label="Fechar">×</button></div>
+      <label>Banco de exercícios<select id="exerciseBank"><option value="">Selecionar exercício</option><option>Agachamento frontal</option><option>Hack squat (máquina)</option><option>Leg press</option><option>Agachamento goblet</option><option>Extensão de pernas (máquina)</option><option>Levantamento terra convencional</option><option>Levantamento terra sumô</option><option>Levantamento terra romeno</option><option>Stiff</option><option>Hip thrust (máquina)</option><option>Glute bridge</option><option>Mesa flexora deitada</option><option>Mesa flexora sentada</option><option>Good morning</option><option>Cable pull through</option><option>Supino reto com barra</option><option>Supino com halteres</option><option>Supino inclinado com halteres</option><option>Chest press (máquina)</option><option>Crucifixo com halteres</option><option>Pec dec (máquina)</option><option>Desenvolvimento com halteres</option><option>Desenvolvimento máquina sentado</option><option>Elevação lateral com halteres</option><option>Elevação lateral no cabo</option><option>Crucifixo inverso com halteres</option><option>Crucifixo inverso (máquina)</option><option>Face pull (cabo)</option><option>Remada curvada com barra</option><option>Remada unilateral com halter</option><option>Remada baixa (cabo)</option><option>Remada máquina</option><option>Remada com apoio no peito</option><option>Puxada alta com barra</option><option>Puxada alta neutra</option><option>Puxada unilateral</option><option>Puxada reto no cabo</option><option>Rosca direta</option><option>Rosca com halteres</option><option>Rosca inclinada com halteres</option><option>Rosca no cabo</option><option>Rosca martelo</option><option>Rosca Scott (máquina)</option><option>Supino fechado</option><option>Tríceps na polia</option><option>Skull crusher</option><option>Mergulho para tríceps</option><option>Prancha</option><option>Crunch no cabo</option><option>Pallof press</option><option>Panturrilha em pé</option><option>Panturrilha sentada</option><option>Panturrilha no leg press</option></select></label>
+      <label>Nome do exercício<input id="exerciseName" required list="exerciseOptions" placeholder="Ou digite um exercício personalizado" autocomplete="off"></label>
+      <label>Grupo muscular<input id="exerciseGroup" placeholder="Ex.: Bíceps · Barra" autocomplete="off"></label>
+      <div class="modal-grid"><label>Carga inicial (kg)<input id="exerciseWeight" type="number" min="0" value="0"></label><label>Repetições<input id="exerciseReps" type="number" min="1" value="10"></label></div>
+      <button class="primary-button full-button" type="submit">Adicionar ao treino</button>
+    </form>
+  </dialog>
+  <datalist id="exerciseOptions"><option value="Supino com halteres"><option value="Supino inclinado com halteres"><option value="Desenvolvimento com halteres"><option value="Remada unilateral com halter"><option value="Puxada alta neutra"><option value="Puxada alta com barra"><option value="Remada curvada com barra"><option value="Remada baixa"><option value="Elevação lateral com halteres"><option value="Face pull"><option value="Rosca direta"><option value="Rosca martelo"><option value="Tríceps na polia"><option value="Agachamento goblet"><option value="Levantamento terra"><option value="Stiff"><option value="Mesa flexora sentada"><option value="Hip thrust máquina"><option value="Extensão de pernas"><option value="Abdominal na polia"></datalist>
+  <dialog class="modal" id="startModal"><form method="dialog" id="startForm"><div class="modal-heading"><div><p class="eyebrow">NOVO TREINO</p><h2>O que você vai treinar?</h2></div><button class="close-modal" value="cancel" aria-label="Fechar">×</button></div><label>Nome do treino<input id="workoutName" required placeholder="Ex.: Costas e ombros" autocomplete="off"></label><p class="modal-help">Depois, você adiciona somente os exercícios que quiser registrar.</p><button class="primary-button full-button" type="submit">Começar agora</button></form></dialog>
+  <dialog class="modal" id="profileModal"><form method="dialog" id="profileForm"><div class="modal-heading"><div><p class="eyebrow">SEU PERFIL</p><h2>Como quer ser chamado?</h2></div><button class="close-modal" value="cancel" aria-label="Fechar">×</button></div><label>Nome de exibição<input id="profileInput" required autocomplete="name"></label><button class="primary-button full-button save-name" type="submit">Salvar nome</button></form></dialog>
+  <template id="exerciseTemplate">
+    <article class="exercise-card"><div class="exercise-top"><div class="drag">⠿</div><div class="exercise-name"><h2></h2><p></p></div><span class="prev-load"></span><button class="remove-exercise" aria-label="Remover exercício">×</button></div><div class="sets-table"><div class="table-head"><span>SÉRIE</span><span>KG</span><span>REPS</span><span></span></div><div class="set-rows"></div></div><button class="new-set">+ Adicionar série</button><div class="exercise-details"><label>RPE<input class="exercise-rpe" placeholder="Ex.: 8"></label><label>Observações<input class="exercise-notes" placeholder="Ex.: técnica, dor, ajuste de banco…"></label></div></article>
+  </template>
+  <script src="app.js"></script>
+</body>
+</html>
