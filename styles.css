@@ -464,3 +464,19 @@ input,select,textarea,button{font-size:16px;-webkit-tap-highlight-color:transpar
     padding-right: 12px;
   }
 }
+
+/* Cardio: somente check + equipamento */
+.cardio-controls{display:flex;align-items:center;gap:18px;margin-top:18px;padding-top:15px;border-top:1px solid #f0f0ec}
+.cardio-done{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:700;cursor:pointer}
+.cardio-check{width:20px;height:20px;accent-color:var(--acid-deep);cursor:pointer}
+.cardio-type-label{display:flex;align-items:center;gap:9px;font-size:10px;font-weight:800;color:#85877f;text-transform:uppercase;letter-spacing:.6px}
+.cardio-type{border:1px solid #e1e2dc;border-radius:7px;background:#fafaf8;color:var(--ink);padding:9px 30px 9px 10px;font:12px Manrope;text-transform:none;letter-spacing:0}
+.cardio-type:focus{outline:2px solid #ff6b35;border-color:#ff6b35}
+.cardio-card:has(.cardio-check:checked) .cardio-done span{color:#658208}
+@media(max-width:760px){
+  .cardio-controls{flex-direction:column;align-items:stretch;gap:13px}
+  .cardio-done{min-height:42px}
+  .cardio-check{width:22px;height:22px}
+  .cardio-type-label{justify-content:space-between}
+  .cardio-type{min-height:42px;font-size:16px}
+}
