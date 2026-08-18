@@ -253,3 +253,214 @@ input,select,textarea,button{font-size:16px;-webkit-tap-highlight-color:transpar
   .toast{left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));text-align:center;z-index:200}
 }
 @media(max-width:390px){.brand{font-size:18px}.nav-item{min-width:32px;padding-left:5px;padding-right:5px}.content{padding-left:12px;padding-right:12px}.topbar{gap:7px}.topbar h1{font-size:21px}.topbar .primary-button,.topbar .ghost-button,.topbar .select-button{padding-left:8px;padding-right:8px;font-size:10px}.chart{height:200px}}
+
+
+/* =========================================================
+   Mobile: vertical off-canvas menu
+   ========================================================= */
+.mobile-menu-button,
+.mobile-menu-overlay {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  /* Full-width app on phones — no centered "card" feeling */
+  html, body {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    background: var(--bg);
+  }
+
+  .app-shell {
+    width: 100%;
+    min-height: 100dvh;
+  }
+
+  /* The sidebar becomes a proper vertical drawer */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    width: min(285px, 82vw);
+    height: 100dvh;
+    min-height: 0;
+    padding: calc(22px + env(safe-area-inset-top)) 18px
+             calc(18px + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    border: 0;
+    border-right: 1px solid var(--line);
+    transform: translateX(-105%);
+    transition: transform .25s ease;
+    box-shadow: 16px 0 40px rgba(0,0,0,.10);
+    z-index: 300;
+    background: #f9f9f6;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sidebar.menu-open {
+    transform: translateX(0);
+  }
+
+  .sidebar .brand {
+    margin: 0 4px 38px;
+    font-size: 23px;
+  }
+
+  .sidebar .brand-mark {
+    width: 30px;
+    height: 30px;
+    font-size: 19px;
+  }
+
+  .sidebar nav {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+  }
+
+  .sidebar .nav-item {
+    width: 100%;
+    min-height: 48px;
+    padding: 11px 13px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #6f716c;
+  }
+
+  .sidebar .nav-item span {
+    width: 26px;
+    flex: 0 0 26px;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .sidebar .nav-item.active {
+    background: #e9e9e2;
+    color: #151613;
+  }
+
+  .sidebar-footer {
+    display: flex;
+    margin-top: auto;
+    padding: 18px 7px 0;
+    min-height: 60px;
+  }
+
+  /* Floating hamburger, always reachable */
+  .mobile-menu-button {
+    position: fixed;
+    display: grid;
+    place-content: center;
+    gap: 4px;
+    top: calc(10px + env(safe-area-inset-top));
+    left: 12px;
+    width: 40px;
+    height: 40px;
+    padding: 9px;
+    border: 1px solid #deded8;
+    border-radius: 11px;
+    background: rgba(249,249,246,.96);
+    color: var(--ink);
+    box-shadow: 0 4px 14px rgba(0,0,0,.07);
+    z-index: 350;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
+  .mobile-menu-button span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform .2s ease, opacity .2s ease;
+  }
+
+  .mobile-menu-button.is-open span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .mobile-menu-button.is-open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-button.is-open span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  .mobile-menu-overlay {
+    position: fixed;
+    display: block;
+    inset: 0;
+    background: rgba(20,21,18,.38);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .25s ease, visibility .25s ease;
+    z-index: 250;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+  }
+
+  .mobile-menu-overlay.is-visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Main content now genuinely fills the iPhone width */
+  .content {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: calc(68px + env(safe-area-inset-top)) 14px
+             calc(28px + env(safe-area-inset-bottom));
+  }
+
+  /* Keep the first heading clear of the hamburger */
+  .topbar {
+    padding-left: 0;
+  }
+
+  /* Better touch targets */
+  .nav-item,
+  .primary-button,
+  .ghost-button,
+  .select-button,
+  .start-routine,
+  .new-set,
+  .add-exercise,
+  .check-set,
+  .remove-exercise,
+  .close-modal {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  body.mobile-menu-active {
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 390px) {
+  .sidebar {
+    width: min(275px, 84vw);
+  }
+
+  .mobile-menu-button {
+    left: 10px;
+  }
+
+  .content {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}

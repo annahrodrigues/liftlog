@@ -26,3 +26,52 @@ document.querySelector('#toggleRest').addEventListener('click',()=>{restActive=!
 document.querySelector('#endWorkout').addEventListener('click',()=>{const done=active().exercises.flatMap(x=>x.sets).filter(x=>x[2]),volume=done.reduce((t,x)=>t+x[0]*x[1],0),elapsed=active().elapsed;state.history.unshift({date:new Date().toLocaleDateString('pt-BR'),name:active().name,exercises:active().exercises.length,sets:done.length,volume,duration:`${Math.floor(elapsed/60)} min`,exerciseLog:active().exercises});state.active=null;restActive=false;restSeconds=0;document.querySelector('#toggleRest').textContent='Iniciar pausa';save();render();renderHistory();goTo('historico');toast('Treino encerrado e salvo no histórico.')});
 const exerciseModal=document.querySelector('#exerciseModal');document.querySelector('#addExercise').addEventListener('click',()=>exerciseModal.showModal());document.querySelector('#exerciseBank').addEventListener('change',e=>{if(e.target.value)document.querySelector('#exerciseName').value=e.target.value});document.querySelector('#exerciseForm').addEventListener('submit',e=>{e.preventDefault();const name=document.querySelector('#exerciseName').value.trim(),group=document.querySelector('#exerciseGroup').value.trim()||'Exercício personalizado',weight=+document.querySelector('#exerciseWeight').value,reps=+document.querySelector('#exerciseReps').value;active().exercises.push({name,group,previous:'sem histórico',rpe:'',notes:'',sets:[[weight,reps,false]]});save();render();exerciseModal.close();e.target.reset();toast('Exercício adicionado')});
 const profileModal=document.querySelector('#profileModal');document.querySelector('#editProfile').addEventListener('click',()=>{document.querySelector('#profileInput').value=state.profileName;profileModal.showModal()});document.querySelector('#profileForm').addEventListener('submit',e=>{e.preventDefault();state.profileName=document.querySelector('#profileInput').value.trim();save();renderProfile();profileModal.close();toast('Nome atualizado')});document.querySelectorAll('.nav-item').forEach(button=>button.addEventListener('click',()=>goTo(button.dataset.page)));function toast(message){const el=document.querySelector('#toast');el.textContent=message;el.classList.add('visible');setTimeout(()=>el.classList.remove('visible'),2600)}render();renderProfile();renderHistory();renderRoutines();
+
+
+/* =========================================================
+   Mobile vertical menu
+   ========================================================= */
+(() => {
+  const menu = document.querySelector('.sidebar');
+  const trigger = document.querySelector('#mobileMenuButton');
+  const overlay = document.querySelector('#mobileMenuOverlay');
+  if (!menu || !trigger || !overlay) return;
+
+  const closeMenu = () => {
+    menu.classList.remove('menu-open');
+    overlay.classList.remove('is-visible');
+    trigger.classList.remove('is-open');
+    trigger.setAttribute('aria-expanded', 'false');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('mobile-menu-active');
+  };
+
+  const openMenu = () => {
+    menu.classList.add('menu-open');
+    overlay.classList.add('is-visible');
+    trigger.classList.add('is-open');
+    trigger.setAttribute('aria-expanded', 'true');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('mobile-menu-active');
+  };
+
+  trigger.addEventListener('click', () => {
+    menu.classList.contains('menu-open') ? closeMenu() : openMenu();
+  });
+
+  overlay.addEventListener('click', closeMenu);
+
+  document.querySelectorAll('.sidebar .nav-item').forEach(item => {
+    item.addEventListener('click', closeMenu);
+  });
+
+  document.querySelector('.sidebar .brand')?.addEventListener('click', closeMenu);
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeMenu();
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 760) closeMenu();
+  });
+})();
