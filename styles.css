@@ -486,3 +486,5 @@ input,select,textarea,button{font-size:16px;-webkit-tap-highlight-color:transpar
 .remove-routine{min-height:44px;padding:10px 14px}
 .remove-routine:active{transform:scale(.98)}
 @media (min-width:700px){.remove-routine:hover{opacity:.88}}
+
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}.modal-actions .full-button{width:auto;margin-top:0}
