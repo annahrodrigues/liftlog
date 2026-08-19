@@ -490,3 +490,21 @@ input,select,textarea,button{font-size:16px;-webkit-tap-highlight-color:transpar
 .remove-active-routine{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 14px;margin-left:8px;border:1px solid #d9dad3;background:transparent;border-radius:9px;color:#555750;font-size:12px;font-weight:700}
 .remove-active-routine:active{transform:scale(.98)}
 @media(max-width:760px){.remove-active-routine{margin:10px 0 0;width:100%}}
+
+
+.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'liga';
+}
