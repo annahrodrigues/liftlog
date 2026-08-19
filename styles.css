@@ -487,9 +487,6 @@ input,select,textarea,button{font-size:16px;-webkit-tap-highlight-color:transpar
 .remove-routine:active{transform:scale(.98)}
 @media (min-width:700px){.remove-routine:hover{opacity:.88}}
 
-/* Selected routine removal */
-.routine-card.routine-selected{border-width:2px}
-.remove-routine,.remove-active-routine{min-height:44px;padding:10px 14px}
-.remove-routine:active,.remove-active-routine:active{transform:scale(.98)}
-.remove-active-routine{display:inline-flex;align-items:center;justify-content:center;margin:0 0 16px;width:100%}
-@media (min-width:700px){.remove-routine:hover,.remove-active-routine:hover{opacity:.88}.remove-active-routine{width:auto}}
+.remove-active-routine{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 14px;margin-left:8px;border:1px solid #d9dad3;background:transparent;border-radius:9px;color:#555750;font-size:12px;font-weight:700}
+.remove-active-routine:active{transform:scale(.98)}
+@media(max-width:760px){.remove-active-routine{margin:10px 0 0;width:100%}}
