@@ -387,7 +387,8 @@ input,select,textarea,button{font-size:16px;-webkit-tap-highlight-color:transpar
     background: rgba(249,249,246,.96);
     color: var(--ink);
     box-shadow: 0 4px 14px rgba(0,0,0,.07);
-    z-index: 350;
+    z-index: 1000;
+    pointer-events: auto;
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
   }
@@ -421,7 +422,8 @@ input,select,textarea,button{font-size:16px;-webkit-tap-highlight-color:transpar
     opacity: 0;
     visibility: hidden;
     transition: opacity .25s ease, visibility .25s ease;
-    z-index: 250;
+    z-index: 900;
+    pointer-events: auto;
     -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
   }
@@ -540,3 +542,8 @@ input,select,textarea,button{font-size:16px;-webkit-tap-highlight-color:transpar
 .landing-version div{display:flex;gap:8px;flex-wrap:wrap}
 .landing-version span{font-family:'DM Mono',monospace;font-size:9px;color:#777970}
 @media(max-width:760px){.landing-version{display:block;margin-top:10px;padding:10px 7px 0}.landing-version div{gap:7px}}
+
+
+/* Mobile touch reliability */
+.close-modal { position: relative; z-index: 20; cursor: pointer; pointer-events: auto; touch-action: manipulation; }
+.mobile-menu-button { cursor: pointer; pointer-events: auto; }

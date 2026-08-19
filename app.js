@@ -240,6 +240,15 @@ function clock() {
 setInterval(clock, 1000);
 
 // ========== EVENTOS DOS BOTÕES ==========
+// Fechamento explícito dos modais — mais confiável no toque em mobile
+document.querySelectorAll('.close-modal').forEach(button => {
+  button.addEventListener('click', event => {
+    event.preventDefault();
+    const dialog = button.closest('dialog');
+    if (dialog?.open) dialog.close();
+  });
+});
+
 const startModal = document.querySelector('#startModal');
 
 function openStart() {
