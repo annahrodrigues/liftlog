@@ -246,7 +246,6 @@ function openStart() {
   document.querySelector('#workoutName').value = '';
   startModal.showModal();
 }
-document.querySelector('#startWorkout').addEventListener('click', openStart);
 document.querySelector('#emptyStartWorkout').addEventListener('click', openStart);
 
 document.querySelector('#startForm').addEventListener('submit', e => {
