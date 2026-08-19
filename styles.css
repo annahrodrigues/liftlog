@@ -480,3 +480,9 @@ input,select,textarea,button{font-size:16px;-webkit-tap-highlight-color:transpar
   .cardio-type-label{justify-content:space-between}
   .cardio-type{min-height:42px;font-size:16px}
 }
+
+/* Selected routine / remove action */
+.routine-card.routine-selected{border-width:2px}
+.remove-routine{min-height:44px;padding:10px 14px}
+.remove-routine:active{transform:scale(.98)}
+@media (min-width:700px){.remove-routine:hover{opacity:.88}}
