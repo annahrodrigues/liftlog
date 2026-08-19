@@ -310,6 +310,21 @@ input,select,textarea,button{font-size:16px;-webkit-tap-highlight-color:transpar
   .sidebar .brand {
     margin: 0 4px 38px;
     font-size: 23px;
+    min-width: 0;
+    transition: padding-left .2s ease, font-size .2s ease;
+  }
+
+  /* When the drawer is open, keep the close (X) button clear of the brand. */
+  .sidebar.menu-open .brand {
+    padding-left: 48px;
+    margin-left: 0;
+    font-size: 21px;
+    gap: 7px;
+  }
+
+  .sidebar.menu-open .brand-logo {
+    width: 30px;
+    height: 24px;
   }
 
   .sidebar .brand-mark {
@@ -453,6 +468,16 @@ input,select,textarea,button{font-size:16px;-webkit-tap-highlight-color:transpar
 @media (max-width: 390px) {
   .sidebar {
     width: min(275px, 84vw);
+  }
+
+  .sidebar.menu-open .brand {
+    padding-left: 44px;
+    font-size: 20px;
+  }
+
+  .sidebar.menu-open .brand-logo {
+    width: 28px;
+    height: 22px;
   }
 
   .mobile-menu-button {
