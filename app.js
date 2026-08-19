@@ -37,7 +37,7 @@ function showTraining(activeState) {
   document.querySelector('#sessionStrip').classList.toggle('hidden', !activeState);
   list.classList.toggle('hidden', !activeState);
   document.querySelector('#addExercise').classList.toggle('hidden', !activeState);
-  document.querySelector('#startWorkout').classList.toggle('hidden', activeState);
+  document.querySelector('#emptyStartWorkout').classList.toggle('hidden', activeState);
   document.querySelector('#startTimer').classList.toggle('hidden', !activeState || timerRunning);
   document.querySelector('#endWorkout').classList.toggle('hidden', !timerRunning);
   document.querySelector('#toggleRest').disabled = !timerRunning;
