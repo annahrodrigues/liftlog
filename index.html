@@ -90,6 +90,23 @@
       </div>
     </article>
   </template>
+  <!-- Modal de confirmação -->
+<dialog class="modal" id="confirmDialog">
+  <form method="dialog">
+    <div class="modal-heading">
+      <div>
+        <p class="eyebrow">ATENÇÃO</p>
+        <h2>Remover treino?</h2>
+      </div>
+      <button class="close-modal" value="cancel" aria-label="Fechar">×</button>
+    </div>
+    <p style="color:#555;font-size:14px;margin:0 0 20px;" id="confirmMessage">Tem certeza que deseja remover este treino?</p>
+    <div style="display:flex;gap:12px;justify-content:flex-end;">
+      <button class="ghost-button" id="confirmCancel" style="padding:10px 20px;">Cancelar</button>
+      <button class="primary-button" id="confirmOk" style="background:#ca4825;padding:10px 20px;">Remover</button>
+    </div>
+  </form>
+</dialog>
   <script src="app.js"></script>
 </body>
 </html>
