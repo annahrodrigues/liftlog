@@ -487,4 +487,9 @@ input,select,textarea,button{font-size:16px;-webkit-tap-highlight-color:transpar
 .remove-routine:active{transform:scale(.98)}
 @media (min-width:700px){.remove-routine:hover{opacity:.88}}
 
-.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}.modal-actions .full-button{width:auto;margin-top:0}
+/* Selected routine removal */
+.routine-card.routine-selected{border-width:2px}
+.remove-routine,.remove-active-routine{min-height:44px;padding:10px 14px}
+.remove-routine:active,.remove-active-routine:active{transform:scale(.98)}
+.remove-active-routine{display:inline-flex;align-items:center;justify-content:center;margin:0 0 16px;width:100%}
+@media (min-width:700px){.remove-routine:hover,.remove-active-routine:hover{opacity:.88}.remove-active-routine{width:auto}}
