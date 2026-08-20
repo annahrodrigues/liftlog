@@ -240,13 +240,19 @@ function clock() {
 setInterval(clock, 1000);
 
 // ========== EVENTOS DOS BOTÕES ==========
-// Fechamento explícito dos modais — mais confiável no toque em mobile
+// Fechamento explícito dos modais — usa pointerup + click para funcionar
+// de forma consistente em toque e mouse, sem depender do comportamento
+// padrão do formulário/dialog.
+function closeModalFromButton(button, event) {
+  event?.preventDefault();
+  event?.stopPropagation();
+  const dialog = button.closest('dialog');
+  if (dialog?.open) dialog.close();
+}
+
 document.querySelectorAll('.close-modal').forEach(button => {
-  button.addEventListener('click', event => {
-    event.preventDefault();
-    const dialog = button.closest('dialog');
-    if (dialog?.open) dialog.close();
-  });
+  button.addEventListener('pointerup', event => closeModalFromButton(button, event));
+  button.addEventListener('click', event => closeModalFromButton(button, event));
 });
 
 const startModal = document.querySelector('#startModal');

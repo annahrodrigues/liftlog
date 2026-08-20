@@ -545,3 +545,37 @@ input,select,textarea,button{font-size:16px;-webkit-tap-highlight-color:transpar
 /* Mobile touch reliability */
 .close-modal { position: relative; z-index: 20; cursor: pointer; pointer-events: auto; touch-action: manipulation; }
 .mobile-menu-button { cursor: pointer; pointer-events: auto; }
+
+/* =========================================================
+   Mobile interaction fixes
+   ========================================================= */
+@media (max-width: 760px) {
+  /* The overlay must stay BEHIND the drawer. Previously it was z-index:900
+     while the drawer was z-index:300, so it intercepted every menu tap. */
+  .mobile-menu-overlay {
+    z-index: 250;
+    pointer-events: none;
+  }
+
+  .mobile-menu-overlay.is-visible {
+    pointer-events: auto;
+  }
+
+  .sidebar {
+    z-index: 300;
+  }
+
+  .sidebar .nav-item {
+    position: relative;
+    z-index: 301;
+    pointer-events: auto;
+  }
+
+  .close-modal {
+    position: relative;
+    z-index: 10;
+    pointer-events: auto !important;
+    touch-action: manipulation;
+    cursor: pointer;
+  }
+}
