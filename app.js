@@ -180,46 +180,44 @@ function startRoutine(routine) {
   toast(`${routine.name} pronta. Inicie o cronômetro quando quiser.`);
 }
 
-// ========== REMOVER COM CONFIRMAÇÃO ==========
+// ========== REMOVER TREINO SELECIONADO ==========
 function removeSelectedRoutine() {
+  const current = active();
+  if (!current) return;
+
+  // Usa a confirmação nativa do navegador para evitar depender de um
+  // segundo <dialog> que pode falhar em alguns navegadores mobile.
+  const confirmed = window.confirm(`Remover o treino "${current.name}" da seleção?`);
+  if (!confirmed) return;
+
+  const name = current.name;
+  clearWorkoutState();
+  render();
+  renderRoutines();
+  goTo('treino');
+  toast(`${name} removida da seleção.`);
+}
+
+// O botão pertence à área de ações do topo. Isso evita que ele roube
+// largura do título no mobile e faça o cabeçalho quebrar de forma torta.
+function renderActiveRoutineRemoveButton() {
+  const actions = document.querySelector('#treino .workout-actions');
+  if (!actions) return;
+
+  actions.querySelector('#removeActiveRoutine')?.remove();
   if (!active()) return;
 
-  // Abre o modal de confirmação
-  showConfirmDialog(
-    `Tem certeza que deseja remover o treino "${active().name}"?`,
-    () => {
-      const name = active().name;
-      clearWorkoutState();
-      render();
-      renderRoutines();
-      toast(`${name} removida da seleção.`);
-    }
-  );
+  const button = document.createElement('button');
+  button.id = 'removeActiveRoutine';
+  button.className = 'remove-active-routine';
+  button.type = 'button';
+  button.setAttribute('aria-label', 'Remover treino selecionado');
+  button.textContent = 'Remover treino ×';
+  button.addEventListener('click', removeSelectedRoutine);
+  actions.appendChild(button);
 }
-
-// ========== MODAL DE CONFIRMAÇÃO ==========
-const confirmModal = document.querySelector('#confirmDialog');
-let pendingRemove = null;
-
-function showConfirmDialog(message, callback) {
-  document.querySelector('#confirmMessage').textContent = message;
-  pendingRemove = callback;
-  confirmModal.showModal();
-}
-
-document.querySelector('#confirmCancel')?.addEventListener('click', () => {
-  confirmModal.close();
-  pendingRemove = null;
-});
-
-document.querySelector('#confirmOk')?.addEventListener('click', () => {
-  if (pendingRemove) pendingRemove();
-  confirmModal.close();
-  pendingRemove = null;
-});
 
 // ========== NAVEGAÇÃO ==========
-function renderActiveRoutineRemoveButton(){const existing=document.querySelector('#removeActiveRoutine');if(existing)existing.remove();if(!active())return;const target=document.querySelector('#treino .topbar');if(!target)return;const button=document.createElement('button');button.id='removeActiveRoutine';button.className='remove-active-routine';button.type='button';button.setAttribute('aria-label','Remover treino selecionado');button.textContent='Remover treino ×';button.addEventListener('click',removeSelectedRoutine);target.appendChild(button)}
 
 function goTo(page) {
   document.querySelectorAll('.nav-item').forEach(x => x.classList.toggle('active', x.dataset.page === page));
@@ -240,25 +238,24 @@ function clock() {
 setInterval(clock, 1000);
 
 // ========== EVENTOS DOS BOTÕES ==========
-// Fechamento explícito dos modais — usa pointerup + click para funcionar
-// de forma consistente em toque e mouse, sem depender do comportamento
-// padrão do formulário/dialog.
-function closeModalFromButton(button, event) {
-  event?.preventDefault();
-  event?.stopPropagation();
-  const dialog = button.closest('dialog');
-  if (dialog?.open) dialog.close();
-}
-
+// Fechamento explícito dos modais — mais confiável no toque em mobile
 document.querySelectorAll('.close-modal').forEach(button => {
-  button.addEventListener('pointerup', event => closeModalFromButton(button, event));
-  button.addEventListener('click', event => closeModalFromButton(button, event));
+  button.addEventListener('click', event => {
+    event.preventDefault();
+    const dialog = button.closest('dialog');
+    if (dialog?.open) dialog.close();
+  });
 });
 
 const startModal = document.querySelector('#startModal');
 
 function openStart() {
-  document.querySelector('#workoutName').value = '';
+  const select = document.querySelector('#routineSelect');
+  select.innerHTML = '<option value="">Selecione uma rotina...</option>' +
+    routines.map((routine, index) =>
+      `<option value="${index}">${routine.name} · ${routine.exercises.length} exercícios</option>`
+    ).join('');
+  select.value = '';
   startModal.showModal();
 }
 document.querySelector('#emptyStartWorkout').addEventListener('click', openStart);
@@ -266,13 +263,15 @@ document.querySelector('#emptyStartWorkout').addEventListener('click', openStart
 document.querySelector('#startForm').addEventListener('submit', e => {
   if(e.submitter?.value==='cancel') return;
   e.preventDefault();
-  state.active = blankWorkout();
-  state.active.name = document.querySelector('#workoutName').value.trim();
-  state.active.timerStarted = false;
-  save();
+
+  const routineIndex = Number(document.querySelector('#routineSelect').value);
+  if (!Number.isInteger(routineIndex) || !routines[routineIndex]) {
+    toast('Selecione uma rotina para começar.');
+    return;
+  }
+
+  startRoutine(routines[routineIndex]);
   startModal.close();
-  render();
-  toast('Treino pronto. Adicione exercícios e inicie o cronômetro quando quiser.');
 });
 
 document.querySelector('#startTimer').addEventListener('click', () => {

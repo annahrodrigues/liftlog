@@ -546,36 +546,78 @@ input,select,textarea,button{font-size:16px;-webkit-tap-highlight-color:transpar
 .close-modal { position: relative; z-index: 20; cursor: pointer; pointer-events: auto; touch-action: manipulation; }
 .mobile-menu-button { cursor: pointer; pointer-events: auto; }
 
-/* =========================================================
-   Mobile interaction fixes
-   ========================================================= */
+
+/* ===== Ajuste final do cabeçalho mobile ===== */
+.workout-actions:empty { display: none; }
+
+.remove-active-routine {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 9px 14px;
+  border: 1px solid #d9dad3;
+  background: transparent;
+  border-radius: 9px;
+  color: #555750;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.remove-active-routine:active { transform: scale(.98); }
+
 @media (max-width: 760px) {
-  /* The overlay must stay BEHIND the drawer. Previously it was z-index:900
-     while the drawer was z-index:300, so it intercepted every menu tap. */
-  .mobile-menu-overlay {
-    z-index: 250;
-    pointer-events: none;
+  .topbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 12px;
+    margin-bottom: 18px;
   }
 
-  .mobile-menu-overlay.is-visible {
-    pointer-events: auto;
+  .topbar > div:first-child {
+    width: 100%;
   }
 
-  .sidebar {
-    z-index: 300;
+  .topbar h1 {
+    max-width: 100%;
+    overflow-wrap: anywhere;
   }
 
-  .sidebar .nav-item {
-    position: relative;
-    z-index: 301;
-    pointer-events: auto;
+  .workout-actions {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
   }
 
-  .close-modal {
-    position: relative;
-    z-index: 10;
-    pointer-events: auto !important;
-    touch-action: manipulation;
-    cursor: pointer;
+  .workout-actions .primary-button,
+  .workout-actions .ghost-button,
+  .workout-actions .remove-active-routine {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 42px;
+  }
+
+  .workout-actions .primary-button {
+    flex-grow: 1;
+  }
+
+  .workout-actions .remove-active-routine {
+    margin: 0;
+  }
+}
+
+@media (max-width: 390px) {
+  .workout-actions { gap: 7px; }
+  .workout-actions .primary-button,
+  .workout-actions .ghost-button,
+  .workout-actions .remove-active-routine {
+    padding-left: 9px;
+    padding-right: 9px;
+    font-size: 10px;
   }
 }
